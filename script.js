@@ -1,5 +1,9 @@
 "use strict";
 
+let alpha = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+'M', 'N', 'O', 'P', 'Q', 'R',  'S', 'T', 'U', 'V', 'W', 'X',
+'Y', 'Z' ];
+
 const animals = [
     "Aardvark",
     "Albatross",
@@ -227,6 +231,7 @@ const animals = [
     "Zebra"
 ];
 
+let alphabets = document.getElementsByClassName("alpha");
 let blanks = document.getElementById("fillIt");
 let chances = 0;
 
@@ -238,26 +243,45 @@ for (let i = 0; i < fetchName.length; i++) {
     blanks.append(" __")
 };
 
-// canvas
-let canvas = document.getElementById("drawHangman");
-var ctx = canvas.getContext('2d');
+let image = document.getElementById("hangmanImg");
 
 function checkOut(chances) {
-    if (chances == 1) {
-        ctx.fillRect(25, 25, 10, 500);
+    let imageSrc = "assets/";
+    if (1 <= chances <= 7) {
+        image.src = imageSrc + chances.toString() + ".jpg";
     }
-    else if (chances == 2) {
-        ctx.fillRect(15, 25, 200, 10);
+}
+
+let dec = document.getElementById("result");
+
+function declareResult(chances, arr) {
+    if (chances == 7) {
+        dec.innerHTML = "GAME OVER! Correct word: " + fetchName;
     }
-    else if (chances == 3) {
-        ctx.fillRect(70, 25, 10, 100);
+
+    else {
+        let flag = 0;
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] == "__") {
+                flag = 1;
+                break;
+            }
+        }
+        if (flag == 0) {
+            dec.innerHTML = "YOU WON!";
+            for (let i = 0; i < 26; i++) {
+                alphabets[i].style.visibility = "hidden";
+            }
+        }
     }
 }
 
 function onPress(letter) {
+    alphabets[alpha.indexOf(letter)].setAttribute("disabled", "disabled");
     let flag = 0;
     let str = blanks.innerHTML;
     let arr = str.split(" ");
+    console.log(arr);
     for (let i = 0; i < fetchName.length; i++) {
         if (fetchName[i] == letter) {
             arr[i + 1] = letter;
@@ -270,7 +294,7 @@ function onPress(letter) {
     }
     
     checkOut(chances);
+    declareResult(chances, arr);
 
-    console.log(chances);
     blanks.innerHTML = arr.join(' ');
 }
