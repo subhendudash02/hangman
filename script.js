@@ -1,4 +1,12 @@
 "use strict";
+ 
+document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+});
+
+document.onkeydown = function (e) {
+    return false;
+}
 
 let alpha = [ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
 'M', 'N', 'O', 'P', 'Q', 'R',  'S', 'T', 'U', 'V', 'W', 'X',
@@ -232,12 +240,15 @@ const animals = [
 ];
 
 let alphabets = document.getElementsByClassName("alpha");
-let blanks = document.getElementById("fillIt");
+let blanks = document.getElementById("fillBlanks");
+let chancesLeft = document.getElementById("chances");
+let caption = document.getElementById("caption");
 let chances = 0;
 
 let len = animals.length;
 let fetchName = animals[parseInt(Math.random() * len)].toUpperCase();
-console.log(fetchName);
+
+chancesLeft.innerHTML = 7 - chances;
 
 for (let i = 0; i < fetchName.length; i++) {
     blanks.append(" __")
@@ -257,6 +268,11 @@ let dec = document.getElementById("result");
 function declareResult(chances, arr) {
     if (chances == 7) {
         dec.innerHTML = "GAME OVER! Correct word: " + fetchName;
+        for (let i = 0; i < 26; i++) {
+            alphabets[i].style.visibility = "hidden";
+        }
+        chancesLeft.style.visibility = "hidden";
+        caption.style.visibility = "hidden";
     }
 
     else {
@@ -272,6 +288,8 @@ function declareResult(chances, arr) {
             for (let i = 0; i < 26; i++) {
                 alphabets[i].style.visibility = "hidden";
             }
+            chancesLeft.style.visibility = "hidden";
+            caption.style.visibility = "hidden";
         }
     }
 }
@@ -281,7 +299,7 @@ function onPress(letter) {
     let flag = 0;
     let str = blanks.innerHTML;
     let arr = str.split(" ");
-    console.log(arr);
+
     for (let i = 0; i < fetchName.length; i++) {
         if (fetchName[i] == letter) {
             arr[i + 1] = letter;
@@ -297,4 +315,5 @@ function onPress(letter) {
     declareResult(chances, arr);
 
     blanks.innerHTML = arr.join(' ');
+    chancesLeft.innerHTML = 7 - chances;
 }

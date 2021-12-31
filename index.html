@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Hangman</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <h1>HANGMAN</h1>
+    <h2>Theme: Animals</h2>
+
     <button onclick="onPress('A')" class="alpha">A</button>
     <button onclick="onPress('B')" class="alpha">B</button>
     <button onclick="onPress('C')" class="alpha">C</button>
@@ -34,10 +39,16 @@
     <button onclick="onPress('Y')" class="alpha">Y</button>
     <button onclick="onPress('Z')" class="alpha">Z</button>
 
-    <h3 id="fillIt"></h3>
+    <h3 id="fillBlanks"></h3>
+    <button onclick="window.location.reload()">New Game</button>
 
-    <img src="assets/0.jpg" alt="hangmanImage" id="hangmanImg">
-    <h3 id="result"></h3>
+    <div id="left-div">
+        <img src="assets/0.jpg" alt="hangmanImage" id="hangmanImg">
+    </div>
+    <div id="right-div">
+        <h3 id="caption">Chances left: </h3><h3 id="chances"></h3>
+        <h3 id="result"></h3>
+    </div>
 </body>
     <script src = script.js></script>
 </html>
